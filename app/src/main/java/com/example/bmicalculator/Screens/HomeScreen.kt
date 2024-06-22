@@ -17,7 +17,7 @@ import com.example.bmicalculator.components.*
 import com.example.bmicalculator.data.home.HomeViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -27,7 +27,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val feetValue = remember { mutableStateOf("") }
     val inchesValue = remember { mutableStateOf("") }
     val weightValue = remember { mutableStateOf("") }
-    val bmiValue = remember { mutableStateOf(0.0) }
+    val bmiValue = remember { mutableDoubleStateOf(0.0) }
+    val bmiStatus = remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         homeViewModel.getUserData()
@@ -81,12 +82,17 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
                         WeightTextFieldComponent(weightValue = weightValue)
                         Spacer(modifier = Modifier.height(20.dp))
                         MyButtonComponent(value = "Calculate BMI", onButtonClicked = {
-                            bmiValue.value = calculateBMI(feetValue.value, inchesValue.value, weightValue.value)
+                            bmiValue.doubleValue = calculateBMI(feetValue.value, inchesValue.value, weightValue.value)
+                            bmiStatus.value = interpretBMI(bmiValue.doubleValue)
                         },
                             isEnabled = true)
                         Spacer(modifier = Modifier.height(20.dp))
                         Text(
-                            text = "BMI: ${bmiValue.value}",
+                            text = "BMI: ${bmiValue.doubleValue}",
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        Text(
+                            text = bmiStatus.value,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                     }
@@ -111,6 +117,14 @@ fun calculateBMI(feet: String, inches: String, weight: String): Double {
     }
 }
 
+fun interpretBMI(bmi: Double): String {
+    return when {
+        bmi < 18.5 -> "Underweight"
+        bmi < 24.9 -> "Normal weight"
+        bmi < 29.9 -> "Overweight"
+        else -> "Obesity"
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {

@@ -21,6 +21,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Visibility
@@ -414,7 +415,7 @@ fun AppToolbar(
                 logoutButtonClicked.invoke()
             }) {
                 Icon(
-                    imageVector = Icons.Filled.Logout,
+                    imageVector = Icons.AutoMirrored.Filled.Logout,
                     contentDescription = stringResource(id = R.string.logout),
                     tint = colorResource(id = R.color.white)
                 )
