@@ -25,4 +25,4 @@ A sleek and user-friendly BMI Calculator App built using Kotlin and Jetpack Comp
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/bmi-calculator-app.git
+   git clone https://github.com/Kunal964/Bmi_Login_Firebase.git
